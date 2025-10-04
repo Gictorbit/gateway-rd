@@ -1,0 +1,41 @@
+version: v1
+managed:
+  enabled: true
+  go_package_prefix:
+    default: github.com/gatewayrd/internal/hellosrv/api/gen
+    except:
+      - buf.build/googleapis/googleapis
+      - buf.build/grpc-ecosystem/grpc-gateway
+      - buf.build/community/google-gnostic-openapi
+plugins:
+  - plugin: buf.build/protocolbuffers/go:v1.31.0
+    out: gen
+    opt:
+      - paths=source_relative
+  - plugin: buf.build/grpc/go:v1.3.0
+    out: gen
+    opt:
+      - paths=source_relative
+  - plugin: buf.build/grpc-ecosystem/gateway:v2.15.0
+    out: gen
+    opt:
+      - paths=source_relative
+      - generate_unbound_methods=true
+      - allow_delete_body=true
+  - plugin: buf.build/grpc-ecosystem/openapiv2:v2.15.0
+    out: docs/openapiv2
+    opt:
+      - allow_delete_body=true
+  - plugin: buf.build/community/google-gnostic-openapi:v0.7.0
+    out: docs/openapiv3
+    opt:
+      - paths=source_relative
+  - plugin: buf.build/bufbuild/validate-go:v1.0.2
+    out: gen
+    opt:
+      - paths=source_relative
+#  - plugin: auth
+#    path: ./bin/protoc-gen-auth
+#    out: gen
+#    opt:
+#      - paths=source_relative

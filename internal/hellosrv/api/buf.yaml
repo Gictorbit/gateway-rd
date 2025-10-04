@@ -1,0 +1,14 @@
+version: v1
+name: buf.build/greeter/protos
+breaking:
+  use:
+    - FILE
+lint:
+  use:
+    - BASIC
+  except:
+    - ENUM_ZERO_VALUE_SUFFIX
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/grpc-ecosystem/grpc-gateway
+  - buf.build/gnostic/gnostic
